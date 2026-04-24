@@ -31,7 +31,7 @@
             min-height: 250px;
         }
 
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
 
@@ -50,7 +50,7 @@
 
         .timeline-node { width: 16px; height: 16px; border-radius: 50%; background-color: #d97706; border: 3px solid #fdfbf7; box-shadow: 0 0 0 2px #d97706; }
         
-        .code-block { font-family: monospace; background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-size: 0.875rem; }
+        .code-block { font-family: monospace; background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-size: 0.875rem; white-space: pre; }
         
         .interactive-card { border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 1.5rem; background: #ffffff; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;}
         .interactive-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: #cbd5e1; }
@@ -65,7 +65,7 @@
 
     <!-- Chosen Palette: Warm Neutrals & Slate. Background is #fdfbf7 (warm white), Primary text is #2c3e50 (dark slate), Accents are #d97706 (amber/copper) and #334155 (slate). -->
     
-    <!-- Application Structure Plan: A side-navigation dashboard layout. Because the topic is a comprehensive curriculum covering distinct, sequential yet deep topics (Evolution -> Theory -> Setup -> Data -> Tasks -> Evaluation -> Advanced), a linear report causes scroll fatigue. A dashboard allows users to jump directly to specific modules. Each section uses targeted visual aids (timelines, mock code, interactive models, radar charts) to explain complex NLP concepts intuitively. -->
+    <!-- Application Structure Plan: A side-navigation dashboard layout. Because the topic is a comprehensive curriculum covering distinct, sequential yet deep topics (Evolution -> Theory -> Setup -> Data -> Tasks -> Evaluation -> Advanced -> Projects), a linear report causes scroll fatigue. A dashboard allows users to jump directly to specific modules. Each section uses targeted visual aids (timelines, mock code, interactive models, radar charts, and full project code repositories) to explain complex NLP concepts intuitively. -->
     
     <!-- Visualization & Content Choices: 
          1. Evolution: HTML Timeline -> Show chronological progress without heavy graphics.
@@ -74,7 +74,8 @@
          4. Data Lifecycle: Vertical HTML Tabs -> Step-by-step process flow showing concept + code side-by-side.
          5. Tasks: Dynamic text replacement -> Simulates actual NLP task outputs (NER, Sentiment) to show *what* models do.
          6. Evaluation: Chart.js Radar Chart -> Compare multi-dimensional metrics (Accuracy, BLEU, F1) simultaneously across old vs new models.
-         7. Advanced (RAG): CSS Block Diagram -> Shows architectural data flow cleanly without SVG/Mermaid. -->
+         7. Advanced (RAG): CSS Block Diagram -> Shows architectural data flow cleanly without SVG/Mermaid.
+         8. End-to-End Projects: Tabbed code viewer -> Allows easy copying and pasting of full Python scripts for study. -->
 
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
@@ -93,6 +94,7 @@
             <button onclick="nav('tasks')" id="btn-tasks" class="nav-item w-full text-left px-4 py-3 rounded-lg font-medium text-sm">5. Key Web NLP Tasks</button>
             <button onclick="nav('eval')" id="btn-eval" class="nav-item w-full text-left px-4 py-3 rounded-lg font-medium text-sm">6. Evaluation Metrics</button>
             <button onclick="nav('advanced')" id="btn-advanced" class="nav-item w-full text-left px-4 py-3 rounded-lg font-medium text-sm">7. Advanced Architectures</button>
+            <button onclick="nav('projects')" id="btn-projects" class="nav-item w-full text-left px-4 py-3 rounded-lg font-bold text-amber-700 bg-amber-50 border border-amber-200 mt-2 hover:bg-amber-100">8. End-to-End Projects</button>
         </div>
     </nav>
 
@@ -126,6 +128,17 @@
                         <p class="text-sm text-slate-600">Implement tasks like NER, evaluate models with ROUGE, and enhance via RAG architectures.</p>
                     </div>
                 </div>
+
+                <!-- Study Objectives block -->
+                <div class="mt-8 p-6 bg-blue-50 border-l-4 border-blue-600 rounded-r-lg shadow-sm">
+                    <h3 class="font-bold text-blue-900 text-lg mb-2">Academic Study Objectives</h3>
+                    <ul class="list-disc pl-5 text-sm text-blue-800 space-y-1">
+                        <li><strong>Conceptual Mastery:</strong> Differentiate between Word2Vec, RNNs, and Transformer self-attention architectures.</li>
+                        <li><strong>Mathematical Intuition:</strong> Understand embedding vector spaces, cosine similarity, and attention weights (Query, Key, Value).</li>
+                        <li><strong>Practical Implementation:</strong> Map theoretical data pipelines to actual PyTorch/HuggingFace implementations.</li>
+                        <li><strong>Critical Evaluation:</strong> Select appropriate metrics (BLEU, ROUGE, Perplexity, F1) based on mathematical constraints.</li>
+                    </ul>
+                </div>
                 
                 <div class="mt-12 bg-slate-800 text-white p-8 rounded-xl text-center">
                     <h3 class="serif-text text-2xl mb-4">Ready to begin?</h3>
@@ -143,7 +156,6 @@
                 </div>
 
                 <div class="relative border-l-4 border-slate-200 ml-4 md:ml-12 mt-12 space-y-12 pb-8">
-                    <!-- Timeline Items -->
                     <div class="relative pl-8">
                         <div class="timeline-node absolute -left-[10px] top-1"></div>
                         <h3 class="text-xl font-bold text-slate-800">1950s - 1980s: Rule-Based Systems</h3>
@@ -186,32 +198,27 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                    <!-- Tokenization -->
                     <div class="interactive-card" onclick="updateTheory('tokenization')">
                         <h3 class="text-xl font-bold mb-2">1. Tokenization</h3>
                         <p class="text-sm text-slate-500">Breaking text into smaller chunks.</p>
                     </div>
-                    <!-- Embeddings -->
                     <div class="interactive-card" onclick="updateTheory('embeddings')">
                         <h3 class="text-xl font-bold mb-2">2. Word Embeddings</h3>
                         <p class="text-sm text-slate-500">Converting tokens to number vectors.</p>
                     </div>
-                    <!-- Self Attention -->
                     <div class="interactive-card" onclick="updateTheory('attention')">
                         <h3 class="text-xl font-bold mb-2">3. Self-Attention</h3>
                         <p class="text-sm text-slate-500">Weighing token importance.</p>
                     </div>
-                    <!-- Enc/Dec -->
                     <div class="interactive-card" onclick="updateTheory('encdec')">
                         <h3 class="text-xl font-bold mb-2">4. Encoder-Decoder</h3>
                         <p class="text-sm text-slate-500">The architecture structure.</p>
                     </div>
                 </div>
 
-                <!-- Theory Detail Panel -->
                 <div id="theory-detail" class="mt-8 bg-slate-50 p-6 rounded-xl border border-slate-200 min-h-[250px]">
                     <div class="flex items-center justify-center h-full text-slate-400 italic">
-                        Select a component above to explore its mechanism.
+                        Select a component above to explore its mathematical and structural mechanism.
                     </div>
                 </div>
             </section>
@@ -226,7 +233,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- Software -->
                     <div>
                         <h3 class="text-xl font-bold mb-4 border-b pb-2">Core Software Stack</h3>
                         <ul class="space-y-4">
@@ -241,16 +247,15 @@
                             </li>
                         </ul>
                         <div class="mt-6">
-                            <p class="text-sm text-slate-500 mb-2">Basic Setup Command:</p>
-                            <div class="code-block">
-                                pip install torch torchvision torchaudio<br>
-                                pip install transformers datasets accelerate<br>
-                                pip install spacy && python -m spacy download en_core_web_sm
-                            </div>
+                            <p class="text-sm text-slate-500 mb-2">Basic Setup Command (Jupyter / Terminal):</p>
+                            <div class="code-block text-green-400 font-mono">
+pip install torch torchvision torchaudio
+pip install transformers datasets accelerate peft
+pip install spacy langchain chromadb
+python -m spacy download en_core_web_sm</div>
                         </div>
                     </div>
 
-                    <!-- Hardware Chart -->
                     <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                         <h3 class="text-lg font-bold mb-2 text-center text-slate-800">Estimated VRAM Requirements (Inference)</h3>
                         <p class="text-xs text-center text-slate-500 mb-4">Comparing Quantized (4-bit) vs Unquantized (16-bit) loads.</p>
@@ -301,8 +306,7 @@
                                 <span class="w-3 h-3 rounded-full bg-green-500"></span>
                                 <span class="text-slate-400 text-xs ml-2 font-mono" id="data-file-name">scraper.py</span>
                             </div>
-                            <div id="data-code-view" class="code-block flex-1 bg-transparent p-0 border-none !text-green-400">
-# Step 1: Web Scraping with BeautifulSoup
+                            <div id="data-code-view" class="code-block flex-1 bg-transparent p-0 border-none !text-green-400"># Step 1: Web Scraping with BeautifulSoup
 import requests
 from bs4 import BeautifulSoup
 
@@ -325,13 +329,12 @@ print(raw_text[:100])
             <!-- Section: Tasks -->
             <section id="sec-tasks" class="fade-in hide space-y-6">
                 <div class="mb-8">
-                    <h2 class="text-3xl font-bold text-slate-800 mb-4">Key Web NLP Tasks</h2>
+                    <h2 class="text-3xl font-bold text-slate-800 mb-4">Key Web NLP Tasks (Interactive Simulation)</h2>
                     <p class="text-slate-600 leading-relaxed">
                         Pre-trained models from hubs like Hugging Face allow developers to implement complex NLP tasks with minimal code via Pipelines. Select a task below to see an interactive simulation of the model's behavior.
                     </p>
                 </div>
 
-                <!-- Tabs -->
                 <div class="flex space-x-2 border-b border-slate-200 mb-6 overflow-x-auto custom-scrollbar">
                     <button class="px-4 py-2 border-b-2 border-amber-600 text-amber-700 font-medium whitespace-nowrap" id="tab-sentiment" onclick="switchTask('sentiment')">Sentiment Analysis</button>
                     <button class="px-4 py-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 whitespace-nowrap" id="tab-ner" onclick="switchTask('ner')">Named Entity Recognition</button>
@@ -347,7 +350,7 @@ print(raw_text[:100])
                         </div>
                         <div>
                             <h4 class="font-bold text-slate-700 mb-2">Model Output</h4>
-                            <div id="task-output" class="w-full h-40 p-4 bg-slate-50 border border-slate-200 rounded text-sm overflow-y-auto">
+                            <div id="task-output" class="w-full h-40 p-4 bg-slate-50 border border-slate-200 rounded text-sm overflow-y-auto custom-scrollbar">
                                 <span class="text-slate-400 italic">Click 'Run Model Inference' to see results.</span>
                             </div>
                         </div>
@@ -367,20 +370,20 @@ print(raw_text[:100])
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div class="lg:col-span-1 space-y-4 max-h-[450px] overflow-y-auto custom-scrollbar pr-2">
                         <div class="p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
-                            <h4 class="font-bold text-amber-700">Accuracy & F1-Score</h4>
-                            <p class="text-xs text-slate-600 mt-1">Best for classification (e.g., Sentiment). F1 balances Precision (false positives) and Recall (false negatives), crucial for imbalanced datasets.</p>
+                            <h4 class="font-bold text-amber-700">Accuracy, Precision, Recall, F1</h4>
+                            <p class="text-xs text-slate-600 mt-1">Classification metrics. <strong>Precision:</strong> TP / (TP + FP). <strong>Recall:</strong> TP / (TP + FN). <strong>F1:</strong> Harmonic mean of Precision & Recall, crucial for imbalanced datasets.</p>
                         </div>
                         <div class="p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
                             <h4 class="font-bold text-amber-700">Perplexity (PPL)</h4>
-                            <p class="text-xs text-slate-600 mt-1">Measures how well a probability model predicts a sample. Lower is better. Essential for evaluating foundational language models.</p>
+                            <p class="text-xs text-slate-600 mt-1">Measures the model's uncertainty predicting the next token. Mathematically, it is the exponentiated average negative log-likelihood of a sequence. Lower PPL = better language modeling.</p>
                         </div>
                         <div class="p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
                             <h4 class="font-bold text-amber-700">BLEU Score</h4>
-                            <p class="text-xs text-slate-600 mt-1">Bilingual Evaluation Understudy. Evaluates machine translation against human reference translations based on n-gram overlap.</p>
+                            <p class="text-xs text-slate-600 mt-1">Bilingual Evaluation Understudy. Evaluates translation by calculating n-gram precision against human references. It strictly penalizes outputs that are too short via a mathematical Brevity Penalty.</p>
                         </div>
                         <div class="p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
-                            <h4 class="font-bold text-amber-700">ROUGE</h4>
-                            <p class="text-xs text-slate-600 mt-1">Recall-Oriented Understudy for Gisting Evaluation. Standard metric for summarization tasks, focusing on recall of n-grams.</p>
+                            <h4 class="font-bold text-amber-700">ROUGE (N, L)</h4>
+                            <p class="text-xs text-slate-600 mt-1">Recall-Oriented Understudy for Gisting Evaluation. ROUGE-N measures recall overlap of N-grams. ROUGE-L utilizes the Longest Common Subsequence (LCS), effectively capturing structural sentence flow.</p>
                         </div>
                     </div>
                     
@@ -405,18 +408,21 @@ print(raw_text[:100])
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                     <div class="bg-indigo-50 border border-indigo-100 p-6 rounded-xl">
-                        <h3 class="text-xl font-bold text-indigo-900 mb-2">Fine-Tuning</h3>
+                        <h3 class="text-xl font-bold text-indigo-900 mb-2">Fine-Tuning & PEFT</h3>
+                        <p class="text-sm text-indigo-800 mb-3">
+                            Updating the model's internal weights on custom data. Full fine-tuning is extremely memory-intensive.
+                        </p>
                         <p class="text-sm text-indigo-800">
-                            Updating the model's actual internal weights by training it further on a custom, labeled dataset. 
-                            <strong>Best for:</strong> Changing the model's tone, formatting style, or embedding deep, static domain knowledge. 
-                            <em>High compute cost.</em>
+                            <strong>Study Focus - PEFT (LoRA):</strong> Parameter-Efficient Fine-Tuning methods like Low-Rank Adaptation (LoRA) freeze the original model weights and inject trainable rank-decomposition matrices. This mathematically reduces trainable parameters by 10,000x, making fine-tuning highly accessible on single GPUs.
                         </p>
                     </div>
                     <div class="bg-amber-50 border border-amber-100 p-6 rounded-xl">
-                        <h3 class="text-xl font-bold text-amber-900 mb-2">Prompt Engineering</h3>
+                        <h3 class="text-xl font-bold text-amber-900 mb-2">Prompting & In-Context Learning</h3>
+                        <p class="text-sm text-amber-800 mb-3">
+                            Guiding the model without updating weights. LLMs utilize emergent few-shot learning capabilities.
+                        </p>
                         <p class="text-sm text-amber-800">
-                            Crafting inputs iteratively to guide the model's response without changing its weights. Includes zero-shot, few-shot, and Chain-of-Thought prompting.
-                            <strong>Best for:</strong> Quick iterations, formatting constraints, logic prompting.
+                            <strong>Study Focus - Chain of Thought (CoT):</strong> A technique where the model is prompted to output its step-by-step reasoning process before answering. This forces the attention mechanism to allocate discrete compute to logical steps, drastically improving complex reasoning.
                         </p>
                     </div>
                 </div>
@@ -427,7 +433,6 @@ print(raw_text[:100])
                     <p class="text-sm text-slate-600 text-center mb-8 max-w-2xl mx-auto">RAG grounds the LLM on external, proprietary data by retrieving relevant documents during the generation process, significantly reducing hallucinations.</p>
                     
                     <div class="flex flex-col md:flex-row items-center justify-center gap-4 text-sm font-medium">
-                        <!-- User -->
                         <div class="p-4 bg-slate-100 border border-slate-300 rounded-lg text-center w-32 shadow-sm">
                             <div class="text-2xl mb-1">&#128100;</div>
                             User Query
@@ -436,7 +441,6 @@ print(raw_text[:100])
                         <div class="text-slate-400 hidden md:block">&#8594;</div>
                         <div class="text-slate-400 md:hidden">&#8595;</div>
 
-                        <!-- Vector DB & Retrieval -->
                         <div class="flex flex-col gap-2">
                             <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg text-center w-40 shadow-sm">
                                 <div class="text-2xl mb-1">&#128269;</div>
@@ -452,7 +456,6 @@ print(raw_text[:100])
                         <div class="text-slate-400 hidden md:block">&#8594;</div>
                         <div class="text-slate-400 md:hidden">&#8595;</div>
 
-                        <!-- Prompt Builder -->
                         <div class="p-4 bg-amber-50 border border-amber-200 rounded-lg text-center w-40 shadow-sm relative">
                             <div class="absolute -top-3 -right-3 bg-amber-500 text-white text-[10px] px-2 py-1 rounded-full">Context added</div>
                             <div class="text-2xl mb-1">&#128221;</div>
@@ -462,11 +465,36 @@ print(raw_text[:100])
                         <div class="text-slate-400 hidden md:block">&#8594;</div>
                         <div class="text-slate-400 md:hidden">&#8595;</div>
 
-                        <!-- LLM -->
                         <div class="p-4 bg-purple-50 border border-purple-200 rounded-lg text-center w-32 shadow-sm">
                             <div class="text-2xl mb-1">&#129302;</div>
                             LLM Generator
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: End-to-End Projects -->
+            <section id="sec-projects" class="fade-in hide space-y-6">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-4">Complete End-to-End Projects</h2>
+                    <p class="text-slate-600 leading-relaxed">
+                        For study and practical application, here are complete, runnable Python scripts for three major NLP workflows. You can copy these directly into your IDE, Jupyter Notebook, or Google Colab environment.
+                    </p>
+                </div>
+
+                <div class="flex space-x-2 border-b border-slate-200 mb-4 overflow-x-auto custom-scrollbar">
+                    <button class="px-4 py-2 border-b-2 border-amber-600 text-amber-700 font-medium whitespace-nowrap" id="tab-proj1" onclick="switchProject(1)">1. Web Pipeline (Inference)</button>
+                    <button class="px-4 py-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 whitespace-nowrap" id="tab-proj2" onclick="switchProject(2)">2. Fine-Tuning with LoRA</button>
+                    <button class="px-4 py-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 whitespace-nowrap" id="tab-proj3" onclick="switchProject(3)">3. Document RAG System</button>
+                </div>
+
+                <div class="bg-[#1e293b] rounded-xl border border-slate-700 shadow-lg flex flex-col relative h-[500px]">
+                    <div class="flex justify-between items-center p-3 border-b border-slate-600 bg-slate-800 rounded-t-xl">
+                        <span class="text-slate-300 text-sm font-mono" id="project-filename">sentiment_web_app.py</span>
+                        <button onclick="copyCode()" class="text-xs bg-slate-600 hover:bg-slate-500 text-white px-3 py-1 rounded transition-colors" id="copy-btn">Copy Code</button>
+                    </div>
+                    <div class="flex-1 overflow-y-auto custom-scrollbar p-0">
+                        <pre id="project-code" class="text-green-400 font-mono text-sm p-4 m-0 leading-relaxed bg-transparent"></pre>
                     </div>
                 </div>
             </section>
@@ -480,23 +508,24 @@ print(raw_text[:100])
         let vramChartInstance = null;
         let evalChartInstance = null;
         let currentTaskType = 'sentiment';
+        let currentProjectIndex = 1;
 
         const theoryData = {
             tokenization: {
-                title: "Tokenization",
-                content: "Before a model can process text, it must be divided into manageable pieces called tokens. These can be words, subwords, or characters. Modern LLMs mostly use subword tokenization (like Byte-Pair Encoding or WordPiece) to handle rare words and keep the vocabulary size manageable while preserving meaning.<br><br><span class='font-mono bg-slate-200 px-2 py-1 rounded text-sm text-slate-800'>'Unbelievable' &#8594; ['Un', '##believ', '##able']</span>"
+                title: "Tokenization & Positional Encoding",
+                content: "<p class='mb-2'>Before a model can process text, it must be divided into manageable pieces called tokens. Modern LLMs use subword tokenization algorithms like <strong>Byte-Pair Encoding (BPE)</strong> or <strong>WordPiece</strong> to handle out-of-vocabulary words and keep the vocabulary size manageable while preserving meaning.</p><p class='mb-2'><strong>Study Detail:</strong> Because Transformers process tokens in parallel (unlike RNNs), they lack an inherent sense of order. To fix this, we add <em>Positional Encodings</em> (often sine/cosine functions) to the token embeddings so the model knows a word's position in a sentence.</p><div class='font-mono bg-slate-200 px-3 py-2 rounded text-sm text-slate-800 mt-2'>Raw: 'Unbelievable'<br>BPE Tokens: ['Un', '##believ', '##able']</div>"
             },
             embeddings: {
-                title: "Word Embeddings",
-                content: "Embeddings map categorical tokens to dense vectors of real numbers in a high-dimensional space. Words with similar meanings are located close to each other in this space. This transforms text into a mathematical format that neural networks can perform calculus upon.<br><br><span class='font-mono bg-slate-200 px-2 py-1 rounded text-sm text-slate-800'>'King' - 'Man' + 'Woman' &#8776; 'Queen'</span>"
+                title: "Word Embeddings & Vector Space",
+                content: "<p class='mb-2'>Embeddings map categorical tokens to dense, continuous vectors of real numbers in a high-dimensional space (e.g., 768 to 4096 dimensions). Words with similar semantic meanings are located close to each other, measurable via <strong>Cosine Similarity</strong>.</p><p class='mb-2'><strong>Study Detail:</strong> Unlike early static embeddings (Word2Vec) where 'bank' always had one vector, modern contextual embeddings (from BERT/GPT) calculate vectors dynamically based on the surrounding sentence, effectively capturing polysemy (multiple meanings).</p><div class='font-mono bg-slate-200 px-3 py-2 rounded text-sm text-slate-800 mt-2'>Mathematical Intuition:<br>Vec('King') - Vec('Man') + Vec('Woman') &#8776; Vec('Queen')</div>"
             },
             attention: {
-                title: "Self-Attention Mechanism",
-                content: "The core innovation of the Transformer. As the model processes each token, self-attention allows it to 'look' at every other token in the sequence to understand context. It calculates attention weights, determining how much focus to place on surrounding words, resolving ambiguities like 'The bank of the river' vs 'The bank on the corner'."
+                title: "Scaled Dot-Product Self-Attention",
+                content: "<p class='mb-2'>The core mathematical engine of the Transformer. Self-attention allows a token to 'look' at every other token in the sequence to understand context and resolve ambiguities.</p><p class='mb-2'><strong>Study Detail:</strong> It computes three vectors for each token: <strong>Query (Q)</strong> (what I'm looking for), <strong>Key (K)</strong> (what I contain), and <strong>Value (V)</strong> (my actual content). The attention score is the dot product of Q and K, passed through a Softmax function, which then scales the V vectors.</p><div class='font-mono bg-slate-200 px-3 py-2 rounded text-sm text-slate-800 mt-2'>Attention(Q, K, V) = softmax((Q &middot; K^T) / &radic;d_k) &middot; V</div>"
             },
             encdec: {
-                title: "Encoder-Decoder Architecture",
-                content: "Originally designed for translation. The <strong>Encoder</strong> processes the input sequence and compresses it into a contextualized representation. The <strong>Decoder</strong> takes this representation and generates the output sequence step-by-step. Models like BERT are Encoder-only, GPTs are Decoder-only, and T5 uses both."
+                title: "Architectures: Encoder vs. Decoder",
+                content: "<p class='mb-2'>The original Transformer used both, but the Web Age has mathematically specialized them:</p><ul class='list-disc pl-5 space-y-1 mb-2 text-sm'><li><strong>Encoder-Only (BERT):</strong> Uses bi-directional attention (looks left and right simultaneously). Excellent for understanding text, classification, and NER.</li><li><strong>Decoder-Only (GPT, LLaMA):</strong> Uses masked causal attention (can only look left/past). Autoregressive by nature, making it the standard for generative tasks and modern LLMs.</li><li><strong>Encoder-Decoder (T5, BART):</strong> Best for sequence-to-sequence tasks mapping one distinct distribution to another, like translation or summarization.</li></ul>"
             }
         };
 
@@ -526,9 +555,9 @@ def clean_text(text):
     # Remove HTML tags (if any slipped through)
     text = re.sub(r'<[^>]+>', '', text)
     # Remove URLs
-    text = re.sub(r'http\S+', '', text)
+    text = re.sub(r'http\\S+', '', text)
     # Remove special characters, keep letters/numbers
-    text = re.sub(r'[^a-zA-Z0-9\s.,!?]', '', text)
+    text = re.sub(r'[^a-zA-Z0-9\\s.,!?]', '', text)
     return text.strip()
 
 cleaned = clean_text(raw_text)`
@@ -570,40 +599,244 @@ print(inputs['input_ids'].shape) # Output: torch.Size([1, 512])`
             }
         ];
 
+        const projectCodes = {
+            1: {
+                filename: "hf_pipeline_inference.py",
+                code: `"""
+Project 1: Basic Web NLP Pipeline (Zero-Shot & Sentiment)
+This script demonstrates how to utilize pre-trained models from Hugging Face 
+for immediate inference, mimicking a backend service for a web app.
+
+Dependencies: pip install transformers torch
+"""
+
+from transformers import pipeline
+
+def run_web_nlp_tasks():
+    print("--- Initializing NLP Pipelines ---")
+    
+    # 1. Sentiment Analysis
+    print("\\n[Task 1: Sentiment Analysis]")
+    # Downloads a default distilled BERT model fine-tuned for sentiment
+    sentiment_analyzer = pipeline("sentiment-analysis")
+    
+    reviews = [
+        "The new UI update is incredibly fast and intuitive!",
+        "Customer support was terrible and my issue is still unresolved."
+    ]
+    
+    for review in reviews:
+        result = sentiment_analyzer(review)[0]
+        print(f"Review: '{review}'")
+        print(f"Result: {result['label']} (Confidence: {result['score']:.4f})\\n")
+
+    # 2. Zero-Shot Classification
+    # Categorize text without specifically training on these categories
+    print("[Task 2: Zero-Shot Classification]")
+    zero_shot_classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+    
+    article_text = "Apple just announced a new M3 chip that significantly speeds up machine learning tasks."
+    candidate_labels = ["politics", "technology", "sports", "entertainment"]
+    
+    result = zero_shot_classifier(article_text, candidate_labels)
+    print(f"Text: '{article_text}'")
+    print("Predicted Categories:")
+    for label, score in zip(result['labels'], result['scores']):
+        print(f" - {label}: {score:.4f}")
+
+if __name__ == "__main__":
+    run_web_nlp_tasks()
+`
+            },
+            2: {
+                filename: "lora_finetuning.py",
+                code: `"""
+Project 2: Parameter-Efficient Fine-Tuning (PEFT) using LoRA
+This advanced script shows how to fine-tune a causal language model 
+on a custom dataset without running out of GPU memory.
+
+Dependencies: pip install transformers datasets peft accelerate trl torch
+"""
+
+import torch
+from datasets import load_dataset
+from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments
+from peft import LoraConfig, get_peft_model
+from trl import SFTTrainer
+
+def setup_and_train():
+    model_id = "gpt2" # Using GPT-2 for demonstration (can be replaced with Llama/Mistral)
+    
+    # 1. Load Tokenizer & Model
+    print(f"Loading {model_id}...")
+    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    tokenizer.pad_token = tokenizer.eos_token
+    
+    model = AutoModelForCausalLM.from_pretrained(
+        model_id, 
+        device_map="auto" # Automatically places model on GPU if available
+    )
+
+    # 2. Setup LoRA (Low-Rank Adaptation) Config
+    # This reduces trainable parameters by injecting small rank matrices
+    print("Configuring LoRA...")
+    lora_config = LoraConfig(
+        r=8,               # Rank of the update matrices
+        lora_alpha=32,     # Scaling factor
+        target_modules=["c_attn"], # Target attention blocks (depends on model architecture)
+        lora_dropout=0.05,
+        bias="none",
+        task_type="CAUSAL_LM"
+    )
+    
+    # Wrap model for PEFT
+    peft_model = get_peft_model(model, lora_config)
+    peft_model.print_trainable_parameters()
+
+    # 3. Load Dataset
+    # Using a simple quote dataset for demonstration
+    dataset = load_dataset("Abirate/english_quotes")
+    
+    def format_instruction(sample):
+        return f"Quote: {sample['quote']} - Author: {sample['author']}"
+
+    # 4. Configure Trainer
+    training_args = TrainingArguments(
+        output_dir="./results",
+        per_device_train_batch_size=4,
+        gradient_accumulation_steps=4,
+        learning_rate=2e-4,
+        logging_steps=10,
+        max_steps=50, # Keep small for quick demonstration
+        optim="paged_adamw_8bit" 
+    )
+
+    trainer = SFTTrainer(
+        model=peft_model,
+        train_dataset=dataset["train"],
+        peft_config=lora_config,
+        formatting_func=format_instruction,
+        max_seq_length=128,
+        tokenizer=tokenizer,
+        args=training_args,
+    )
+
+    # 5. Execute Training
+    print("Starting Fine-tuning...")
+    trainer.train()
+    
+    # Save the specialized weights (adapters)
+    trainer.model.save_pretrained("my-custom-lora-adapter")
+    print("Training complete. Adapter saved.")
+
+if __name__ == "__main__":
+    setup_and_train()
+`
+            },
+            3: {
+                filename: "rag_system_langchain.py",
+                code: `"""
+Project 3: Retrieval-Augmented Generation (RAG) System
+Build a system that reads local documents and answers questions about them 
+using a Vector Database to prevent LLM hallucinations.
+
+Dependencies: pip install langchain chromadb sentence-transformers transformers
+"""
+
+from langchain_community.document_loaders import TextLoader
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain.text_splitter import CharacterTextSplitter
+from transformers import pipeline
+from langchain_community.llms import HuggingFacePipeline
+from langchain.chains import RetrievalQA
+
+def build_rag_pipeline():
+    print("--- Initializing RAG System ---")
+
+    # 1. Create a dummy knowledge document
+    doc_content = \"\"\"
+    The AlphaCentauri database system was released in 2024. 
+    It features a revolutionary quantum-hash indexing mechanism that speeds up 
+    read queries by 400% compared to traditional B-Tree databases. 
+    It is primarily used in high-frequency trading applications.
+    \"\"\"
+    with open("knowledge.txt", "w") as f:
+        f.write(doc_content)
+
+    # 2. Load and Split Documents
+    print("Loading documents into chunks...")
+    loader = TextLoader("knowledge.txt")
+    documents = loader.load()
+    
+    # Split text to fit into embedding model context windows
+    text_splitter = CharacterTextSplitter(chunk_size=100, chunk_overlap=20)
+    docs = text_splitter.split_documents(documents)
+
+    # 3. Create Vector Database (Chroma)
+    print("Embedding documents and storing in Vector DB...")
+    # Using a fast, local embedding model
+    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    
+    db = Chroma.from_documents(docs, embeddings)
+
+    # 4. Setup LLM Generator
+    print("Loading LLM Generator...")
+    # For local demo, using a tiny text-generation model
+    # In production, this would be Llama-3, Mistral, or an OpenAI API call
+    generator = pipeline("text2text-generation", model="google/flan-t5-small", max_length=50)
+    local_llm = HuggingFacePipeline(pipeline=generator)
+
+    # 5. Build RAG Chain
+    print("Building Retrieval QA Chain...")
+    retriever = db.as_retriever(search_kwargs={"k": 1}) # Retrieve top 1 most relevant chunk
+    
+    qa_chain = RetrievalQA.from_chain_type(
+        llm=local_llm,
+        chain_type="stuff",
+        retriever=retriever,
+        return_source_documents=True
+    )
+
+    # 6. Execute Query
+    query = "What is the primary use case of the AlphaCentauri database?"
+    print(f"\\nQuery: {query}")
+    
+    result = qa_chain.invoke({"query": query})
+    print(f"\\nAnswer: {result['result']}")
+    print(f"Source Context Used: {result['source_documents'][0].page_content.strip()}")
+
+if __name__ == "__main__":
+    build_rag_pipeline()
+`
+            }
+        };
+
         // Navigation Logic
         function nav(sectionId) {
-            // Update UI buttons
             document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('nav-active'));
             document.getElementById(`btn-${sectionId}`).classList.add('nav-active');
 
-            // Hide all sections
             document.querySelectorAll('main section').forEach(sec => {
                 sec.classList.add('hide');
-                sec.classList.remove('fade-in'); // Reset animation
+                sec.classList.remove('fade-in'); 
             });
 
-            // Show selected section
             const target = document.getElementById(`sec-${sectionId}`);
             target.classList.remove('hide');
             
-            // Trigger reflow to restart animation
             void target.offsetWidth; 
             target.classList.add('fade-in');
 
             currentSection = sectionId;
 
-            // Initialize charts if needed (to handle canvas resizing issues in hidden divs)
-            if(sectionId === 'env') {
-                setTimeout(initVramChart, 100);
-            }
-            if(sectionId === 'eval') {
-                setTimeout(initEvalChart, 100);
-            }
+            if(sectionId === 'env') setTimeout(initVramChart, 100);
+            if(sectionId === 'eval') setTimeout(initEvalChart, 100);
+            if(sectionId === 'projects') switchProject(1); // Load default project
         }
 
-        // Theory Interactive Logic
+        // Theory Logic
         function updateTheory(key) {
-            // Update active state on cards
             document.querySelectorAll('#sec-theory .interactive-card').forEach(card => card.classList.remove('active'));
             event.currentTarget.classList.add('active');
 
@@ -612,12 +845,12 @@ print(inputs['input_ids'].shape) # Output: torch.Size([1, 512])`
             detailPanel.innerHTML = `
                 <div class="fade-in">
                     <h3 class="text-2xl font-bold text-slate-800 mb-4">${data.title}</h3>
-                    <p class="text-slate-700 leading-relaxed">${data.content}</p>
+                    <div class="text-slate-700 leading-relaxed">${data.content}</div>
                 </div>
             `;
         }
 
-        // Data Lifecycle Interactive Logic
+        // Data Lifecycle Logic
         function updateDataLifecycle(index, el) {
             document.querySelectorAll('.workflow-step').forEach(step => step.classList.remove('active'));
             el.classList.add('active');
@@ -628,11 +861,10 @@ print(inputs['input_ids'].shape) # Output: torch.Size([1, 512])`
             document.getElementById('data-desc-view').innerText = data.desc;
         }
 
-        // Tasks Interactive Logic
+        // Tasks Logic
         function switchTask(task) {
             currentTaskType = task;
             
-            // Update tabs
             ['sentiment', 'ner', 'summary'].forEach(t => {
                 const tab = document.getElementById(`tab-${t}`);
                 if (t === task) {
@@ -644,7 +876,6 @@ print(inputs['input_ids'].shape) # Output: torch.Size([1, 512])`
                 }
             });
 
-            // Set inputs
             const inputEl = document.getElementById('task-input');
             const outputEl = document.getElementById('task-output');
             outputEl.innerHTML = `<span class="text-slate-400 italic">Click 'Run Model Inference' to see results.</span>`;
@@ -686,6 +917,59 @@ print(inputs['input_ids'].shape) # Output: torch.Size([1, 512])`
                     `;
                 }
             }, 800);
+        }
+
+        // Projects Logic
+        function switchProject(index) {
+            currentProjectIndex = index;
+            
+            // Update tabs
+            [1, 2, 3].forEach(t => {
+                const tab = document.getElementById(`tab-proj${t}`);
+                if (t === index) {
+                    tab.classList.replace('border-transparent', 'border-amber-600');
+                    tab.classList.replace('text-slate-500', 'text-amber-700');
+                } else {
+                    tab.classList.replace('border-amber-600', 'border-transparent');
+                    tab.classList.replace('text-amber-700', 'text-slate-500');
+                }
+            });
+
+            const data = projectCodes[index];
+            document.getElementById('project-filename').innerText = data.filename;
+            
+            // Escape HTML characters before inserting text
+            const escapedCode = data.code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            document.getElementById('project-code').innerHTML = escapedCode;
+
+            // Reset copy button
+            const btn = document.getElementById('copy-btn');
+            btn.innerText = "Copy Code";
+            btn.classList.replace('bg-green-600', 'bg-slate-600');
+        }
+
+        function copyCode() {
+            const codeText = projectCodes[currentProjectIndex].code;
+            const textArea = document.createElement("textarea");
+            textArea.value = codeText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                const btn = document.getElementById('copy-btn');
+                btn.innerText = "Copied!";
+                btn.classList.replace('bg-slate-600', 'bg-green-600');
+                
+                setTimeout(() => {
+                    btn.innerText = "Copy Code";
+                    btn.classList.replace('bg-green-600', 'bg-slate-600');
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy', err);
+            }
+            
+            document.body.removeChild(textArea);
         }
 
         // Charts Initialization
