@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Language Processing: Interactive Guide & Research Plan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fafaf9; /* stone-50 */
+            color: #292524; /* stone-800 */
+        }
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        /* REQUIRED: Chart Container Styling */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 250px;
+            }
+        }
+        /* Custom scrollbar for code blocks */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f5f5f4; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d6d3d1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a29e; 
+        }
+        .nav-link.active {
+            color: #4f46e5; /* indigo-600 */
+            border-bottom: 2px solid #4f46e5;
+        }
+        .pipeline-step.active {
+            background-color: #e0e7ff; /* indigo-100 */
+            border-color: #6366f1; /* indigo-500 */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Chosen Palette: Warm Stone Neutrals with Indigo Accents -->
+    <!-- Application Structure Plan: The SPA is structured into four main functional areas to facilitate learning and planning: 1) Executive Overview (defining NLP and its impact), 2) Interactive Pipeline (a step-by-step explainer of NLP mechanics allowing users to click through stages and see corresponding Python code), 3) Semantic Space Visualization (an interactive scatter plot to explain complex concepts like word embeddings visually), and 4) Actionable Research Plan (a structured timeline with 3 specific projects). This structure was chosen to move the user logically from high-level understanding -> technical mechanics -> visual conceptualization -> practical application. -->
+    <!-- Visualization & Content Choices: 
+         1. NLP Industry Applications -> Goal: Inform -> Viz: Doughnut Chart (Chart.js) -> Shows distribution of use cases.
+         2. NLP Pipeline -> Goal: Organize & Inform -> Viz: Interactive HTML/CSS Flowchart (NO SVG) -> Users click nodes to reveal preprocessing/modeling details and code snippets.
+         3. Word Embeddings -> Goal: Relationships -> Viz: 2D Scatter Plot (Chart.js) -> Demonstrates vector math (King - Man + Woman = Queen) conceptually.
+         4. Project Timeline -> Goal: Organize & Change -> Viz: HTML/CSS Timeline -> Structured roadmap for the requested 2-3 projects. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-indigo-600 tracking-tight">&#9881; NLP Explorer</span>
+                </div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#overview" class="nav-link active text-stone-600 hover:text-indigo-600 px-1 py-2 text-sm font-medium transition-colors">Overview</a>
+                    <a href="#pipeline" class="nav-link text-stone-600 hover:text-indigo-600 px-1 py-2 text-sm font-medium transition-colors">Interactive Pipeline</a>
+                    <a href="#embeddings" class="nav-link text-stone-600 hover:text-indigo-600 px-1 py-2 text-sm font-medium transition-colors">Embeddings</a>
+                    <a href="#research" class="nav-link text-stone-600 hover:text-indigo-600 px-1 py-2 text-sm font-medium transition-colors">Research & Projects</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-24">
+
+        <!-- Section: Overview -->
+        <section id="overview" class="scroll-mt-24">
+            <div class="mb-8">
+                <h1 class="text-4xl font-extrabold text-stone-900 mb-4">Demystifying Natural Language Processing</h1>
+                <p class="text-lg text-stone-600 max-w-3xl leading-relaxed">
+                    This section provides a high-level introduction to Natural Language Processing (NLP). Here, you will discover what NLP is, its fundamental goal of bridging human communication and computer understanding, and explore a data visualization representing its most common real-world applications. This sets the foundational context before diving into technical mechanics.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-white p-8 rounded-2xl shadow-sm border border-stone-100">
+                <div>
+                    <h2 class="text-2xl font-bold text-stone-800 mb-4">What is NLP?</h2>
+                    <p class="text-stone-600 mb-6 leading-relaxed">
+                        Natural Language Processing is a subfield of artificial intelligence (AI) concerned with the interactions between computers and human language. The ultimate objective of NLP is to read, decipher, understand, and make sense of human languages in a manner that is valuable.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <span class="text-indigo-500 mr-3 text-xl">&#10003;</span>
+                            <p class="text-stone-700"><strong>NLU (Natural Language Understanding):</strong> Focuses on machine reading comprehension (e.g., intent classification, sentiment analysis).</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-indigo-500 mr-3 text-xl">&#10003;</span>
+                            <p class="text-stone-700"><strong>NLG (Natural Language Generation):</strong> Focuses on text generation (e.g., summarizing documents, answering questions).</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full flex flex-col items-center">
+                    <h3 class="text-sm font-semibold text-stone-500 uppercase tracking-wider mb-4">Common Industry Applications</h3>
+                    <div class="chart-container">
+                        <canvas id="applicationsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Interactive Pipeline -->
+        <section id="pipeline" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-extrabold text-stone-900 mb-4">The Interactive NLP Pipeline</h2>
+                <p class="text-lg text-stone-600 max-w-3xl leading-relaxed">
+                    How does raw text become a machine learning model? This section breaks down the standard NLP processing pipeline. <strong>Click on each step</strong> in the flow diagram below to reveal detailed explanations, conceptual data structures, and the actual Python code used to execute that step.
+                </p>
+            </div>
+
+            <!-- Pipeline Visual Structure (HTML/CSS ONLY) -->
+            <div class="flex flex-wrap md:flex-nowrap justify-center items-center gap-2 md:gap-4 mb-12 overflow-x-auto pb-4">
+                <button onclick="updatePipeline('raw')" class="pipeline-step active flex flex-col items-center p-4 bg-white border-2 border-stone-200 rounded-xl min-w-[140px] cursor-pointer transition-all">
+                    <span class="text-2xl mb-2">&#128196;</span>
+                    <span class="font-semibold text-stone-800 text-sm">Raw Text</span>
+                </button>
+                <span class="text-stone-400 text-2xl hidden md:block">&#8594;</span>
+                <button onclick="updatePipeline('tokenization')" class="pipeline-step flex flex-col items-center p-4 bg-white border-2 border-stone-200 rounded-xl min-w-[140px] cursor-pointer transition-all hover:bg-stone-50">
+                    <span class="text-2xl mb-2">&#9986;</span>
+                    <span class="font-semibold text-stone-800 text-sm">Tokenization</span>
+                </button>
+                <span class="text-stone-400 text-2xl hidden md:block">&#8594;</span>
+                <button onclick="updatePipeline('cleaning')" class="pipeline-step flex flex-col items-center p-4 bg-white border-2 border-stone-200 rounded-xl min-w-[140px] cursor-pointer transition-all hover:bg-stone-50">
+                    <span class="text-2xl mb-2">&#129529;</span>
+                    <span class="font-semibold text-stone-800 text-sm">Cleaning</span>
+                </button>
+                <span class="text-stone-400 text-2xl hidden md:block">&#8594;</span>
+                <button onclick="updatePipeline('vectorization')" class="pipeline-step flex flex-col items-center p-4 bg-white border-2 border-stone-200 rounded-xl min-w-[140px] cursor-pointer transition-all hover:bg-stone-50">
+                    <span class="text-2xl mb-2">&#128202;</span>
+                    <span class="font-semibold text-stone-800 text-sm">Vectorization</span>
+                </button>
+                <span class="text-stone-400 text-2xl hidden md:block">&#8594;</span>
+                <button onclick="updatePipeline('modeling')" class="pipeline-step flex flex-col items-center p-4 bg-white border-2 border-stone-200 rounded-xl min-w-[140px] cursor-pointer transition-all hover:bg-stone-50">
+                    <span class="text-2xl mb-2">&#129302;</span>
+                    <span class="font-semibold text-stone-800 text-sm">Modeling</span>
+                </button>
+            </div>
+
+            <!-- Pipeline Content Display -->
+            <div id="pipeline-content" class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-stone-100 min-h-[350px] animate-fade-in">
+                <!-- Content injected via JS -->
+            </div>
+        </section>
+
+        <!-- Section: Semantic Space (Embeddings) -->
+        <section id="embeddings" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-extrabold text-stone-900 mb-4">Visualizing Semantic Space (Word Embeddings)</h2>
+                <p class="text-lg text-stone-600 max-w-3xl leading-relaxed">
+                    Vectorization algorithms (like Word2Vec or GloVe) map words to arrays of numbers. This allows machines to understand relationships based on spatial distance. This section uses an interactive scatter plot to visualize how a machine sees semantic relationships in a compressed 2D space.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 bg-white p-8 rounded-2xl shadow-sm border border-stone-100">
+                <div class="lg:col-span-1">
+                    <h3 class="text-xl font-bold text-stone-800 mb-4">The Magic of Vectors</h3>
+                    <p class="text-stone-600 mb-4 text-sm leading-relaxed">
+                        By representing words as dense vectors, we can perform mathematical operations on language. Words that appear in similar contexts in training data are plotted closer together.
+                    </p>
+                    <div class="bg-stone-50 p-4 rounded-lg border border-stone-200 mb-4">
+                        <p class="text-sm font-semibold text-stone-700 mb-2">Classic Example:</p>
+                        <code class="code-font text-xs text-indigo-600 bg-indigo-50 px-2 py-1 rounded">Vector("King") - Vector("Man") + Vector("Woman") &asymp; Vector("Queen")</code>
+                    </div>
+                    <p class="text-stone-600 text-sm leading-relaxed">
+                        Hover over the points on the chart. You'll notice clustering by category (Gender, Geography, Sentiment). This is how models like ChatGPT inherently grasp word meanings.
+                    </p>
+                </div>
+                <div class="lg:col-span-2">
+                    <div class="chart-container">
+                        <canvas id="embeddingsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Research & Projects Plan -->
+        <section id="research" class="scroll-mt-24 mb-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-extrabold text-stone-900 mb-4">NLP Mastery: Research & Project Plan</h2>
+                <p class="text-lg text-stone-600 max-w-3xl leading-relaxed">
+                    To move from theory to practice, a structured approach is essential. This section outlines a progressive research plan featuring 3 distinct projects—ranging from beginner to advanced—designed to build comprehensive NLP skills.
+                </p>
+            </div>
+
+            <div class="space-y-8">
+                
+                <!-- Project 1 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden group">
+                    <div class="bg-stone-50 px-6 py-4 border-b border-stone-100 flex justify-between items-center cursor-pointer" onclick="toggleProject('proj1')">
+                        <div class="flex items-center gap-4">
+                            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-green-100 text-green-600 font-bold">1</span>
+                            <h3 class="text-lg font-bold text-stone-800 group-hover:text-indigo-600 transition-colors">Beginner: E-Commerce Sentiment Analyzer</h3>
+                        </div>
+                        <span id="icon-proj1" class="text-stone-400 text-xl transition-transform duration-300">&#43;</span>
+                    </div>
+                    <div id="content-proj1" class="px-6 py-6 hidden animate-fade-in">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="font-semibold text-stone-800 mb-2">Objective</h4>
+                                <p class="text-stone-600 text-sm mb-4">Build a classification model to automatically categorize product reviews as positive, negative, or neutral. This teaches fundamental text cleaning and basic machine learning workflows.</p>
+                                <h4 class="font-semibold text-stone-800 mb-2">Tech Stack</h4>
+                                <p class="text-sm font-mono text-indigo-600 bg-indigo-50 inline-block px-2 py-1 rounded">Python, Pandas, NLTK, Scikit-learn</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-stone-800 mb-2">Execution Steps</h4>
+                                <ul class="text-sm text-stone-600 space-y-2 list-disc pl-4">
+                                    <li><strong>Data:</strong> Download the Amazon Reviews dataset from Kaggle.</li>
+                                    <li><strong>Preprocessing:</strong> Remove HTML tags, special characters; apply lowercase and stop-word removal.</li>
+                                    <li><strong>Feature Extraction:</strong> Convert text to numbers using TF-IDF (Term Frequency-Inverse Document Frequency).</li>
+                                    <li><strong>Modeling:</strong> Train a Naive Bayes or Logistic Regression classifier.</li>
+                                    <li><strong>Evaluation:</strong> Measure Accuracy, Precision, Recall, and F1-Score.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden group">
+                    <div class="bg-stone-50 px-6 py-4 border-b border-stone-100 flex justify-between items-center cursor-pointer" onclick="toggleProject('proj2')">
+                        <div class="flex items-center gap-4">
+                            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-600 font-bold">2</span>
+                            <h3 class="text-lg font-bold text-stone-800 group-hover:text-indigo-600 transition-colors">Intermediate: Medical Named Entity Recognition (NER)</h3>
+                        </div>
+                        <span id="icon-proj2" class="text-stone-400 text-xl transition-transform duration-300">&#43;</span>
+                    </div>
+                    <div id="content-proj2" class="px-6 py-6 hidden animate-fade-in">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="font-semibold text-stone-800 mb-2">Objective</h4>
+                                <p class="text-stone-600 text-sm mb-4">Extract specific entities (Drug names, Diseases, Symptoms) from unstructured clinical text. Introduces sequence labeling and domain-specific processing.</p>
+                                <h4 class="font-semibold text-stone-800 mb-2">Tech Stack</h4>
+                                <p class="text-sm font-mono text-indigo-600 bg-indigo-50 inline-block px-2 py-1 rounded">spaCy, scispaCy, Pandas</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-stone-800 mb-2">Execution Steps</h4>
+                                <ul class="text-sm text-stone-600 space-y-2 list-disc pl-4">
+                                    <li><strong>Data:</strong> Obtain sample clinical notes (e.g., MIMIC-III open subsets if available, or synthetic clinical data).</li>
+                                    <li><strong>Setup:</strong> Install <code>scispaCy</code> and load a biomedical pre-trained pipeline (e.g., <code>en_core_sci_sm</code>).</li>
+                                    <li><strong>Extraction:</strong> Pass text through the model to identify <code>entities</code>.</li>
+                                    <li><strong>Refinement:</strong> Write custom rules (using spaCy's Matcher) to catch entities the base model missed.</li>
+                                    <li><strong>Output:</strong> Structure the output into a structured format (JSON/CSV) mapping text snippets to Entity Types.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden group">
+                    <div class="bg-stone-50 px-6 py-4 border-b border-stone-100 flex justify-between items-center cursor-pointer" onclick="toggleProject('proj3')">
+                        <div class="flex items-center gap-4">
+                            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-purple-100 text-purple-600 font-bold">3</span>
+                            <h3 class="text-lg font-bold text-stone-800 group-hover:text-indigo-600 transition-colors">Advanced: Generative Document Q&A Bot</h3>
+                        </div>
+                        <span id="icon-proj3" class="text-stone-400 text-xl transition-transform duration-300">&#43;</span>
+                    </div>
+                    <div id="content-proj3" class="px-6 py-6 hidden animate-fade-in">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="font-semibold text-stone-800 mb-2">Objective</h4>
+                                <p class="text-stone-600 text-sm mb-4">Build a Retrieval-Augmented Generation (RAG) system. A user uploads a PDF (e.g., a manual), and can ask natural language questions about it. The bot answers based *only* on the document context.</p>
+                                <h4 class="font-semibold text-stone-800 mb-2">Tech Stack</h4>
+                                <p class="text-sm font-mono text-indigo-600 bg-indigo-50 inline-block px-2 py-1 rounded">LangChain, HuggingFace Transformers, FAISS, Streamlit</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-stone-800 mb-2">Execution Steps</h4>
+                                <ul class="text-sm text-stone-600 space-y-2 list-disc pl-4">
+                                    <li><strong>Document Loading:</strong> Use PyPDF2 or LangChain loaders to extract text from PDFs.</li>
+                                    <li><strong>Chunking & Embedding:</strong> Split text into manageable chunks. Convert chunks into vector embeddings using a HuggingFace model (e.g., <code>all-MiniLM-L6-v2</code>).</li>
+                                    <li><strong>Vector Store:</strong> Store embeddings in a local vector database (FAISS).</li>
+                                    <li><strong>Retrieval & Generation:</strong> When a user asks a question, embed the query, find the top 3 most similar document chunks, and pass them as context to a Generative LLM (e.g., Llama-2 or a smaller open-source equivalent) to generate the final answer.</li>
+                                    <li><strong>UI:</strong> Wrap it in a simple Streamlit web app.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-stone-200 mt-12 py-8 text-center text-stone-500 text-sm">
+        <p>Interactive NLP Analysis Application | Built for Research & Education</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Navigation Highlighting ---
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollY >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // --- Chart 1: Applications Doughnut Chart ---
+            const ctxApp = document.getElementById('applicationsChart').getContext('2d');
+            new Chart(ctxApp, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Machine Translation', 'Sentiment Analysis', 'Chatbots / Conversational AI', 'Text Summarization', 'Information Extraction'],
+                    datasets: [{
+                        data: [25, 20, 30, 15, 10],
+                        backgroundColor: [
+                            '#6366f1', // indigo-500
+                            '#818cf8', // indigo-400
+                            '#a5b4fc', // indigo-300
+                            '#c7d2fe', // indigo-200
+                            '#e0e7ff'  // indigo-100
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Inter' } } },
+                        tooltip: {
+                            callbacks: { label: function(context) { return context.label + ': ' + context.raw + '%'; } }
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+
+            // --- Pipeline Interactive Data & Logic ---
+            const pipelineData = {
+                raw: {
+                    title: "Raw Text Data",
+                    desc: "The starting point of any NLP task. Text data is inherently unstructured and messy. It comes from tweets, books, reviews, or spoken audio transcripts.",
+                    visual: `<div class="bg-stone-50 p-4 rounded text-stone-700 italic border border-stone-200">"Wow! I absolutely loved the new Quantum movie. The CGI was 10/10... but the plot was meh. #cinema"</div>`,
+                    code: `# Sample Python String
+text_data = "Wow! I absolutely loved the new Quantum movie. The CGI was 10/10... but the plot was meh. #cinema"`
+                },
+                tokenization: {
+                    title: "Tokenization",
+                    desc: "Tokenization breaks the raw text into smaller units called 'tokens'. These can be words, subwords, or sentences. It is the first step in helping the machine process discrete pieces of information.",
+                    visual: `<div class="flex flex-wrap gap-2">
+                        <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-sm border border-indigo-200">Wow</span>
+                        <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-sm border border-indigo-200">!</span>
+                        <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-sm border border-indigo-200">I</span>
+                        <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-sm border border-indigo-200">absolutely</span>
+                        <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-sm border border-indigo-200">loved</span>
+                        <span class="text-stone-400 px-2 py-1">...</span>
+                    </div>`,
+                    code: `import nltk
+nltk.download('punkt')
+from nltk.tokenize import word_tokenize
+
+tokens = word_tokenize(text_data)
+print(tokens)
+# Output: ['Wow', '!', 'I', 'absolutely', 'loved', ...]`
+                },
+                cleaning: {
+                    title: "Text Cleaning & Normalization",
+                    desc: "This stage removes noise. It involves lowercasing, removing punctuation, and filtering out 'stop words' (common words like 'the', 'is', 'in' that carry little semantic value). It often includes Lemmatization (converting words to their base dictionary form, e.g., 'loved' -> 'love').",
+                    visual: `<div class="flex flex-wrap gap-2 items-center">
+                        <span class="line-through text-red-400 px-1">!</span>
+                        <span class="line-through text-red-400 px-1">i</span>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm border border-green-200">absolutely</span>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm border border-green-200">love <span class="text-xs text-green-600">(lemmatized)</span></span>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm border border-green-200">new</span>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm border border-green-200">quantum</span>
+                        <span class="text-stone-400 px-2 py-1">...</span>
+                    </div>`,
+                    code: `from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+import string
+
+stop_words = set(stopwords.words('english'))
+lemmatizer = WordNetLemmatizer()
+
+clean_tokens = []
+for word in tokens:
+    word = word.lower()
+    if word not in stop_words and word not in string.punctuation:
+        lemma = lemmatizer.lemmatize(word)
+        clean_tokens.append(lemma)
+        
+# Output: ['absolutely', 'love', 'new', 'quantum', 'movie', ...]`
+                },
+                vectorization: {
+                    title: "Vectorization (Feature Extraction)",
+                    desc: "Machine learning models only understand numbers, not text. Vectorization converts our cleaned tokens into numerical arrays. Methods range from simple Bag-of-Words (counting frequencies) to TF-IDF, to dense Word Embeddings.",
+                    visual: `<div class="overflow-x-auto">
+                        <table class="min-w-full text-sm text-left text-stone-500 border border-stone-200">
+                            <thead class="text-xs text-stone-700 uppercase bg-stone-50">
+                                <tr><th>Word</th><th>Doc 1 (TF-IDF)</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b"><td class="px-4 py-2 font-medium">absolutely</td><td class="px-4 py-2 text-indigo-600">0.452</td></tr>
+                                <tr class="bg-white border-b"><td class="px-4 py-2 font-medium">love</td><td class="px-4 py-2 text-indigo-600">0.610</td></tr>
+                                <tr class="bg-white"><td class="px-4 py-2 font-medium">movie</td><td class="px-4 py-2 text-indigo-600">0.201</td></tr>
+                            </tbody>
+                        </table>
+                    </div>`,
+                    code: `from sklearn.feature_extraction.text import TfidfVectorizer
+
+corpus = [" ".join(clean_tokens)] # Re-join tokens for sklearn
+vectorizer = TfidfVectorizer()
+
+X = vectorizer.fit_transform(corpus)
+print(X.toarray())
+# Output: [[0.452, 0.610, 0.201, ...]]`
+                },
+                modeling: {
+                    title: "Modeling & Prediction",
+                    desc: "The numerical vectors are fed into a Machine Learning or Deep Learning model. For our example, a Sentiment Classifier predicts whether the text is Positive, Negative, or Neutral.",
+                    visual: `<div class="flex items-center gap-4 bg-stone-50 p-4 rounded border border-stone-200">
+                        <div class="text-stone-500 font-mono text-xs">[0.452, 0.610...]</div>
+                        <div class="text-xl">&#8594;</div>
+                        <div class="bg-indigo-600 text-white px-3 py-2 rounded shadow-sm text-sm font-bold flex items-center gap-2">
+                            <span>&#9881;</span> Model
+                        </div>
+                        <div class="text-xl">&#8594;</div>
+                        <div class="bg-green-100 text-green-800 border border-green-300 px-3 py-2 rounded font-bold text-sm">
+                            65% Positive
+                        </div>
+                    </div>`,
+                    code: `from sklearn.linear_model import LogisticRegression
+
+# Assume X_train, y_train are already defined
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# Predict sentiment of our new vectorized text
+prediction = model.predict(X)
+probability = model.predict_proba(X)
+
+print(f"Prediction: {prediction[0]}, Confidence: {probability[0].max():.2f}")
+# Output: Prediction: Positive, Confidence: 0.65`
+                }
+            };
+
+            // Expose function to global scope for onclick handlers
+            window.updatePipeline = function(stepId) {
+                // Update active state on buttons
+                document.querySelectorAll('.pipeline-step').forEach(btn => {
+                    btn.classList.remove('active', 'bg-indigo-100', 'border-indigo-500');
+                });
+                const clickedBtn = document.querySelector(`button[onclick="updatePipeline('${stepId}')"]`);
+                clickedBtn.classList.add('active');
+
+                // Update content
+                const data = pipelineData[stepId];
+                const contentDiv = document.getElementById('pipeline-content');
+                
+                // Remove animation class briefly to re-trigger it
+                contentDiv.classList.remove('animate-fade-in');
+                void contentDiv.offsetWidth; // trigger reflow
+                contentDiv.classList.add('animate-fade-in');
+
+                contentDiv.innerHTML = `
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-2xl font-bold text-stone-800 mb-3">${data.title}</h3>
+                            <p class="text-stone-600 mb-6 text-sm leading-relaxed">${data.desc}</p>
+                            <div class="mb-4">
+                                <h4 class="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2">Conceptual View</h4>
+                                ${data.visual}
+                            </div>
+                        </div>
+                        <div class="bg-stone-900 rounded-xl overflow-hidden shadow-inner flex flex-col">
+                            <div class="bg-stone-800 px-4 py-2 text-xs text-stone-400 font-mono flex items-center border-b border-stone-700">
+                                <span class="w-3 h-3 rounded-full bg-red-500 mr-2"></span>
+                                <span class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></span>
+                                <span class="w-3 h-3 rounded-full bg-green-500 mr-2"></span>
+                                python_script.py
+                            </div>
+                            <div class="p-4 overflow-x-auto flex-grow">
+                                <pre><code class="code-font text-sm text-stone-300 leading-snug">${data.code}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            };
+
+            // Initialize pipeline to 'raw'
+            updatePipeline('raw');
+
+            // --- Chart 2: Word Embeddings Scatter Plot ---
+            const ctxEmbed = document.getElementById('embeddingsChart').getContext('2d');
+            
+            // Simulated 2D projection of word embeddings
+            const embedData = {
+                datasets: [
+                    {
+                        label: 'Gender & Royalty',
+                        data: [
+                            {x: 2, y: 8, word: 'King'},
+                            {x: 2.2, y: 2, word: 'Man'},
+                            {x: 8, y: 8.5, word: 'Queen'},
+                            {x: 8.5, y: 2.1, word: 'Woman'}
+                        ],
+                        backgroundColor: '#6366f1', // indigo
+                        pointRadius: 8,
+                        pointHoverRadius: 10
+                    },
+                    {
+                        label: 'Geography',
+                        data: [
+                            {x: -6, y: -4, word: 'Paris'},
+                            {x: -6.5, y: -8, word: 'France'},
+                            {x: -2, y: -4.5, word: 'Berlin'},
+                            {x: -2.5, y: -8.2, word: 'Germany'}
+                        ],
+                        backgroundColor: '#10b981', // emerald
+                        pointRadius: 8,
+                        pointHoverRadius: 10
+                    },
+                    {
+                        label: 'Sentiment',
+                        data: [
+                            {x: 6, y: -5, word: 'Excellent'},
+                            {x: 7, y: -4, word: 'Good'},
+                            {x: -7, y: 5, word: 'Terrible'},
+                            {x: -6, y: 6, word: 'Bad'}
+                        ],
+                        backgroundColor: '#f43f5e', // rose
+                        pointRadius: 8,
+                        pointHoverRadius: 10
+                    }
+                ]
+            };
+
+            new Chart(ctxEmbed, {
+                type: 'scatter',
+                data: embedData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { color: '#f5f5f4' }, min: -10, max: 10, title: { display: true, text: 'Latent Dimension 1' } },
+                        y: { grid: { color: '#f5f5f4' }, min: -10, max: 10, title: { display: true, text: 'Latent Dimension 2' } }
+                    },
+                    plugins: {
+                        legend: { position: 'top', labels: { font: { family: 'Inter' } } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.raw.word + ' (' + context.raw.x + ', ' + context.raw.y + ')';
+                                }
+                            },
+                            titleFont: { size: 14 },
+                            bodyFont: { size: 16, weight: 'bold' },
+                            displayColors: false
+                        }
+                    }
+                }
+            });
+
+            // --- Project Accordion Logic ---
+            window.toggleProject = function(projId) {
+                const content = document.getElementById(`content-${projId}`);
+                const icon = document.getElementById(`icon-${projId}`);
+                
+                if (content.classList.contains('hidden')) {
+                    content.classList.remove('hidden');
+                    icon.style.transform = 'rotate(45deg)';
+                } else {
+                    content.classList.add('hidden');
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            };
+        });
+    </script>
+</body>
+</html>
